@@ -1,1 +1,53 @@
-PLACEHOLDER
+[
+  {
+    "id": "CHR-0001",
+    "displayName": "Sand Saboteur",
+    "role": "Specialist",
+    "classFamily": "Scout",
+    "faction": "Dustveil",
+    "enclave": "Red Dune Enclave",
+    "biome": "Desert",
+    "personalityTags": ["cold", "methodical", "silent"],
+    "visualTags": ["hood", "gas-mask", "desert", "cloak"],
+    "rarity": "Rare",
+    "assetPortrait": "AST-OPR-0001",
+    "assetFolder": "assets/operatives/portraits/dustveil/sand-saboteur.png",
+    "services": ["Contract Broker (sabotage)", "Terrain Discipline"],
+    "signatureArt": "Dune Collapse",
+    "lore": "Once a desert guide who led an entire caravan into a sinkhole. The void rewarded him with lungs that breathe only dust."
+  },
+  {
+    "id": "CHR-0002",
+    "displayName": "Veiled Blade",
+    "role": "Assassin",
+    "classFamily": "Striker",
+    "faction": "Dustveil",
+    "enclave": "Nightfall Hideout",
+    "biome": "Shadow",
+    "personalityTags": ["disciplined", "emotionless"],
+    "visualTags": ["dual-blades", "full-veil", "hooded"],
+    "rarity": "Rare",
+    "assetPortrait": "AST-OPR-0002",
+    "assetFolder": "assets/operatives/portraits/dustveil/veiled-blade.png",
+    "services": ["Combat Instructor (blade arts)"],
+    "signatureArt": "Twin Eclipse",
+    "lore": "Trained in a silent monastery that no longer exists. She never removes the veil because her face is no longer human."
+  },
+  {
+    "id": "CHR-0003",
+    "displayName": "Voidshade Shinobi",
+    "role": "Scout",
+    "classFamily": "Scout",
+    "faction": "Dustveil",
+    "enclave": "Blackleaf Enclave",
+    "biome": "Forest",
+    "personalityTags": ["loyal", "ambitious"],
+    "visualTags": ["red-armour", "hood", "mask"],
+    "rarity": "Common",
+    "assetPortrait": "AST-OPR-0003",
+    "assetFolder": "assets/operatives/portraits/dustveil/voidshade-shinobi.png",
+    "services": ["Recruiter", "Field Operative"],
+    "signatureArt": "Shade Step",
+    "lore": "Standard operative who completed the final shadow rite. Still believes the void can be controlled."
+  }
+]
