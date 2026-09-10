@@ -20,7 +20,7 @@
  * `process.env`, which is why the merge has to happen before Vite starts.
  */
 import { spawn } from "node:child_process";
-import { readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { constants as osConstants } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -88,6 +88,23 @@ export function projectRoot() {
 }
 
 /**
+ * Resolve a local binary from node_modules/.bin so Windows and Unix both work.
+ * Falls back to the bare command name if the local binary is missing.
+ */
+export function resolveLocalBin(command, root) {
+  const isWindows = process.platform === "win32";
+  const binDir = join(root, "node_modules", ".bin");
+  const candidates = isWindows
+    ? [join(binDir, `${command}.cmd`), join(binDir, `${command}.exe`), join(binDir, command)]
+    : [join(binDir, command)];
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) return candidate;
+  }
+  return command; // fallback to PATH
+}
+
+/**
  * Whether `moduleUrl` is the script node was asked to run.
  *
  * Both sides are resolved through symlinks: node realpaths `import.meta.url`
@@ -107,11 +124,19 @@ export function isMainModule(moduleUrl) {
 function main(argv) {
   const [command, ...args] = argv;
   if (!command) {
-    console.error("usage: node scripts/with-app-env.mjs <command> [args…]");
+    console.error("usage: node scripts/with-app-env.mjs <command> [args\u2026]");
     process.exit(2);
   }
-  const env = mergeAppEnv(readAppEnv(projectRoot()), process.env);
-  const child = spawn(command, args, { stdio: "inherit", env });
+  const root = projectRoot();
+  const env = mergeAppEnv(readAppEnv(root), process.env);
+  const resolved = resolveLocalBin(command, root);
+
+  const child = spawn(resolved, args, {
+    stdio: "inherit",
+    env,
+    shell: process.platform === "win32", // needed for .cmd shims on Windows
+  });
+
   // The dev server is long-running and is stopped by signalling this wrapper.
   for (const signal of ["SIGINT", "SIGTERM", "SIGHUP"]) {
     process.on(signal, () => child.kill(signal));
